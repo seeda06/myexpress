@@ -1,22 +1,28 @@
 const express = require('express');
+//.ENV
+const dotenv = require('dotenv');
+dotenv.config();
+
 //LINE
 const line = require('@line/bot-sdk');
 const config = {
-    channelAccessToken: 'dy9+1bBiMFzfxSu0knu/Qj/OepIcYU42WNeUplQlX3u3VjYxeHhHMzY2FDhJwAU2fgmeBmByacLi1bSL2UOpB/oRYmwgJH5oQG4C8NI8EfNvh3Q4NNRk3LrgsT0maDNzwy+AgRRQEE+9Qv3GF/XtwwdB04t89/1O/w1cDnyilFU=',
-    channelSecret: 'e9eae3f5b4def01bd3cce98c1905d8d3'
+    channelAccessToken: process.env.channelAccessToken,
+    channelSecret: process.env.channelSecret
+
 };
 const client = new line.Client(config);
 //FIREBASE
 const firebase = require('firebase');
 require("firebase/firestore");
 const firebaseConfig = {
-    apiKey: "AIzaSyClNo_QztyS6M1xdlGzp9NgEDfLkbL8C4Q",
-    authDomain: "lineoa-6917c.firebaseapp.com",
-    projectId: "lineoa-6917c",
-    storageBucket: "lineoa-6917c.appspot.com",
-    messagingSenderId: "237222461984",
-    appId: "1:237222461984:web:6c411c3748a25790a8f245",
-    measurementId: "G-M1WFEFKCP1"
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId,
+    measurementId: process.env.measurementId
+
 } 
 const admin = firebase.initializeApp(firebaseConfig);
 const db = admin.firestore();
@@ -31,7 +37,7 @@ app.post('/webhook', line.middleware(config), (req, res) => {
         .then((result) => res.json(result));
 });
 
-function handleEvent(event) {
+async function handleEvent(event) {
     if (event.type !== 'message' || event.message.type !== 'text') {
         return Promise.resolve(null);
     }
@@ -40,6 +46,7 @@ function handleEvent(event) {
     //console.log(event.message.text);
     // SAVE TO FIREBASE
     let chat = await db.collection('chats').add(event);
+    
     console.log('Added document with ID: ', chat.id);
     return client.replyMessage(event.replyToken, {
         type: 'text',
@@ -74,6 +81,6 @@ app.get('/test-firebase', async function (req, res) {
     res.send('Test firebase successfully, check your firestore for a new record !!!')
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
