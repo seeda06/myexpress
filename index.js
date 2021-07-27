@@ -47,6 +47,36 @@ async function handleEvent(event) {
     //console.log(event.message);
     //console.log(event.message.text);
     // SAVE TO FIREBASE
+    switch (event.message.text) {
+        case "covid":
+           // let newText = "สวัสดี เราเป็นบอทรายงานสถิติโควิดนะ";
+           let data = await getTodayCovid();
+            let newText = JSON.stringify(data);
+            return client.replyMessage(event.replyToken, {
+                type: 'text',
+                text: newText,
+            });
+            break;
+        default:
+            //console.log(event);
+            return client.replyMessage(event.replyToken, {
+                type: 'text',
+                text: event.message.text,
+            });
+    }
+    async function getTodayCovid() {
+        let current_date = (new Date()).toISOString().split("T")[0];
+        let doc = await db.collection('vaccines').doc(current_date).get();
+        // if (!doc.exists) {
+        //     console.log('No such document!');
+        // } else {
+        //     console.log('Document data:', doc.data());
+        // }
+        return doc.data();
+    }
+    
+    
+
     let chat = await db.collection('chats').add(event);
     
     console.log('Added document with ID: ', chat.id);
@@ -92,7 +122,11 @@ app.get('/vaccine/fetch', async (req, res) => {
     //SAVE TO FIRESTORE
     let current_date = (new Date()).toISOString().split("T")[0];
     await db.collection('vaccines').doc(current_date).set(data);
+    //SWITCH FOR MANY CASES
     
+    
+
+
     //SEND TO BROWSER AS HTML OR TEXT
     let text = JSON.stringify(data);
     res.send(text)
