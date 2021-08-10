@@ -1,0 +1,95 @@
+{
+    "type": "flex",
+    "altText": "This is a Flex Message",
+    "contents": {
+        "type": "bubble",
+        "hero": {
+          "type": "image",
+          "url": "https://s.isanook.com/he/0/rp/rc/w850h510/yacxacm1w0/aHR0cHM6Ly9zLmlzYW5vb2suY29tL2hlLzAvdWQvNS8yODU0MS92YWNjaW5lcy0zLmpwZw==.jpg",
+          "size": "full",
+          "aspectRatio": "20:13",
+          "aspectMode": "cover",
+          "action": {
+            "type": "uri",
+            "label": "Line",
+            "uri": "https://linecorp.com/"
+          }
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "text",
+              "text": "ข้อมูลการฉีดวัคซีน",
+              "weight": "bold",
+              "size": "xl",
+              "contents": []
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "margin": "lg",
+              "contents": [
+                {
+                  "type": "box",
+                  "layout": "baseline",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "ฉีดวัคซีน 1 เข็ม : ${vaccince.oneDose.total} (${vaccince.oneDose.percent}%)",
+                      "size": "sm",
+                      "color": "#666666",
+                      "flex": 5,
+                      "wrap": true,
+                      "contents": []
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "layout": "baseline",
+                  "spacing": "sm",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "ฉีดวัคซีน 2 เข็ม : ${vaccince.twoDose.total} (${vaccince.twoDose.percent}%)",
+                      "size": "sm",
+                      "color": "#666666",
+                      "flex": 5,
+                      "wrap": true,
+                      "contents": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "รวมทั้งหมด : ${vaccince.all.total} (${vaccince.all.percent}%)",
+                  "contents": []
+                }
+              ]
+            }
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "flex": 0,
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "spacer",
+              "size": "sm"
+            }
+          ]
+        }
+      }
+}
